@@ -1,30 +1,50 @@
-import time
+from enum import Enum
 import winsound
+import time
+from typing import Optional
+from datetime import datetime
+
+class Result(Enum):
+    WIN = "win"
+    LOSS = "loss"
+    IN_PROGRESS = "in_progress"
 
 class SportResultNotifier:
-    def __init__(self):
-        self.result = None
 
-    def get_fight_result(self):
+    def __init__(self) -> None:
+        self.url = "https://api.sport.com/fight/1"
+        self.side = "red"
+        self.win_sound = "win.wav"
+        self.loss_sound = "loss.wav"
+        self.log_file = "log.txt"
+
+
+    def get_fight_result(self) -> Result:
         # TODO : Call an API to get the result of the fight
-        self.result = "win"
+        return Result.WIN
+    
+    def log_result(self, result: Result) -> None:
+        with open(self.log_file, 'a') as f:
+            f.write(f'{datetime.now()}: {result.value}\n')
 
-    def play_win_sound(self):
+    def play_win_sound(self) -> None:
         # Launch win music
-        winsound.PlaySound('win.wav', winsound.SND_FILENAME)
+        winsound.PlaySound(self.win_sound, winsound.SND_FILENAME)
 
-    def play_loss_sound(self):
+    def play_loss_sound(self) -> None:
         # Launch loss music
-        winsound.PlaySound('loss.wav', winsound.SND_FILENAME)
+        winsound.PlaySound(self.loss_sound, winsound.SND_FILENAME)
 
-    def monitor_fight(self):
+    def monitor_fight(self) -> None:
         while True:
-            self.get_fight_result()
-            if self.result == "win":
+            result = self.get_fight_result()
+            if result ==  Result.WIN:
                 self.play_win_sound()
+                self.log_result(Result.WIN)
                 break
-            elif self.result == "loss":
+            elif result == Result.LOSS:
                 self.play_loss_sound()
+                self.log_result(Result.LOSS)
                 break
             else:
                 # Wait 1 minute before checking the result again
