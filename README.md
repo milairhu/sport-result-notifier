@@ -43,4 +43,4 @@ An error might be raised in several cases:
 
 - Make the MMA events notifications work.
 - Add support for other sports.
-- Chose appropriate audio notifications for each event.
+- Chose better sound effects
