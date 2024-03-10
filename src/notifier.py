@@ -93,7 +93,7 @@ class SportResultNotifier:
     
     def log_result(self, result: Result) -> None:
         with open(self.log_file, 'a') as f:
-            f.write(f'{datetime.now()}: {self.side} - {result.value}\n')
+            f.write(f'{self.sport},  {datetime.now()}: {self.side} - {result.value}\n')
 
     def play_win_sound(self) -> None:
         # Launch win music
