@@ -145,7 +145,6 @@ class SportResultNotifier:
                 time.sleep(60*5)
             elif result == Result.IN_PROGRESS:
                 # Wait 1 minute before checking the result again
-                self.play_win_sound()
                 time.sleep(60)
             else: 
                 print("ERROR: Result for the request is not supported")
