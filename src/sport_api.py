@@ -12,7 +12,7 @@ class APIConnection:
         self.service = service
 
     def connect(self) -> str:
-        # TODO : Call an API to get the result of the fight
+        # Call an API to get the result of the event
         conn = http.client.HTTPSConnection(self.url)
         conn.request("GET",self.service)
         res = conn.getresponse()

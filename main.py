@@ -18,5 +18,5 @@ TODO: complete with other sports and associated services
 
 if __name__ == "__main__":
     load_dotenv()
-    notifier = SportResultNotifier(Sport.FOOTBALL, "Olympique Lyon")
-    notifier.monitor_fight()
+    notifier = SportResultNotifier(Sport.FOOTBALL, "FC Metz")
+    notifier.monitor_event()
