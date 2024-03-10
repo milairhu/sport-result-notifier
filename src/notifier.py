@@ -104,9 +104,8 @@ class SportResultNotifier:
         winsound.PlaySound(self.loss_sound, winsound.SND_FILENAME)
 
     def play_draw_sound(self) -> None:
-        winsound.PlaySound(self.draw_sound, winsound.SND_FILENAME)
         # Launch draw music
-        pass
+        winsound.PlaySound(self.draw_sound, winsound.SND_FILENAME)
 
     def monitor_event(self) -> None:
         while True:
@@ -120,16 +119,19 @@ class SportResultNotifier:
                 return
             if result ==  Result.WIN:
                 self.play_win_sound()
+                winsound.PlaySound('sound/win_voice.wav', winsound.SND_FILENAME)
                 self.log_result(Result.WIN)
                 print("Team won! Exiting...")
                 return
             elif result == Result.LOSS:
                 self.play_loss_sound()
+                winsound.PlaySound('sound/loss_voice.wav', winsound.SND_FILENAME)
                 self.log_result(Result.LOSS)
                 print("Team lost. Exiting...")
                 return
             elif result == Result.DRAW:
                 self.play_draw_sound()
+                winsound.PlaySound('sound/draw_voice.wav', winsound.SND_FILENAME)
                 self.log_result(Result.DRAW)
                 print("Game is a draw. Exiting...")
                 return
