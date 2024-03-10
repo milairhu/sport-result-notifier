@@ -88,7 +88,6 @@ class SportResultNotifier:
                                 return Result.OPPONENT_GOAL
                         return Result.IN_PROGRESS
         # Team not found
-        print("Error: The team is not playing")
         return None
     
     def log_result(self, result: Result) -> None:
@@ -144,7 +143,10 @@ class SportResultNotifier:
                 # Halftime: Wait 5 minutes before checking the result again
                 self.log_result(Result.HALF_TIME)
                 time.sleep(60*5)
-            else:
+            elif result == Result.IN_PROGRESS:
                 # Wait 1 minute before checking the result again
                 self.play_win_sound()
                 time.sleep(60)
+            else: 
+                print("ERROR: Result for the request is not supported")
+                return
