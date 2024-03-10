@@ -14,6 +14,7 @@ class SportResultNotifier:
         self.side = side
         self.win_sound = "sound/win.wav"
         self.loss_sound = "sound/loss.wav"
+        self.draw_sound = "sound/draw.wav"
         self.log_file = "log.txt"
         self.api = APIConnection(self.api_url, self.service)
         self.side_score = 0
@@ -103,6 +104,7 @@ class SportResultNotifier:
         winsound.PlaySound(self.loss_sound, winsound.SND_FILENAME)
 
     def play_draw_sound(self) -> None:
+        winsound.PlaySound(self.draw_sound, winsound.SND_FILENAME)
         # Launch draw music
         pass
 
@@ -132,11 +134,11 @@ class SportResultNotifier:
                 print("Game is a draw. Exiting...")
                 return
             elif result == Result.TEAM_GOAL:
-                self.play_win_sound() #TODO: change sound
+                winsound.PlaySound('sound/goal_team.wav', winsound.SND_FILENAME)
                 self.log_result(Result.TEAM_GOAL)
                 break
             elif result == Result.OPPONENT_GOAL:
-                self.play_loss_sound() #TODO: change sound
+                winsound.PlaySound('sound/goal_opponent.wav', winsound.SND_FILENAME)
                 self.log_result(Result.OPPONENT_GOAL)
                 break
             elif result == Result.HALF_TIME:
