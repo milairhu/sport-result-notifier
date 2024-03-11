@@ -17,8 +17,8 @@ class SportResultNotifier:
         self.draw_sound = "sound/draw.wav"
         self.log_file = "log.txt"
         self.api = APIConnection(self.api_url, self.service)
-        self.side_score = 0
-        self.opponent_score = 0
+        self.side_score = -1
+        self.opponent_score = -1
         self.side_is_home = False
 
 
@@ -31,19 +31,20 @@ class SportResultNotifier:
         data = json.loads(response) # Convert the response to a json object
         for event in data['summaries']:
             for competitor in event['sport_event']['competitors']:
-                if competitor['name'] == self.side:
-                    # If there is data about the game of the team
-                    if competitor['qualifier'] == 'home':
-                        # If The team is playing at home
-                        self.side_is_home = True
-                        self.side_score = event['sport_event_status']['home_score']
-                        self.opponent_score = event['sport_event_status']['away_score']
-                    else:
-                        # If The team is playing away
-                        self.side_is_home = False
-                        self.side_score = event['sport_event_status']['away_score']
-                        self.opponent_score = event['sport_event_status']['home_score']
-                    
+                if competitor['name'] == self.side :
+                    # If there is data about the game 
+                    if  self.side_score == -1 and self.opponent_score == -1:
+                        # If this is the first time we are checking the game
+                        if competitor['qualifier'] == 'home':
+                            # If The team is playing at home
+                            self.side_is_home = True
+                            self.side_score = event['sport_event_status']['home_score']
+                            self.opponent_score = event['sport_event_status']['away_score']
+                        else:
+                            # If The team is playing away
+                            self.side_is_home = False
+                            self.side_score = event['sport_event_status']['away_score']
+                            self.opponent_score = event['sport_event_status']['home_score']
                     if event['sport_event_status']['match_status'] == 'ended':
                         # If Game is over
                         try:
@@ -52,12 +53,13 @@ class SportResultNotifier:
                                 return Result.DRAW
                         except KeyError:
                             pass
-
                         #If not a draw, check if the team won or lost
                         winnerid = event['sport_event_status']['winner_id']
                         for competitor in event['sport_event']['competitors']:
-                            if competitor['id'] == winnerid and competitor['name'] == self.side:
-                                if competitor['name'] == self.side:
+                            if competitor['name'] == self.side:
+                                # If the team is found
+                                if competitor['id'] == winnerid:
+                                    # if the team is the winner
                                     return Result.WIN
                                 else:
                                     return Result.LOSS
@@ -68,6 +70,7 @@ class SportResultNotifier:
                     else:
                         # Game is still in progress
                         print("Game is still in progress")
+                        print(f"Team: {self.side} plays home : {self.side_is_home}. Score: Self {self.side_score} - Opponent:  {self.opponent_score}")
                         # Look for score changes
                         if self.side_is_home:
                             if self.side_score < event['sport_event_status']['home_score']:
@@ -78,6 +81,12 @@ class SportResultNotifier:
                                 self.opponent_score = event['sport_event_status']['away_score']
                                 print("Opponent scored!")
                                 return Result.OPPONENT_GOAL
+                            elif self.opponent_score > event['sport_event_status']['away_score']:
+                                self.opponent_score = event['sport_event_status']['away_score']
+                                print("Opponent goal canceled!")
+                            elif self.side_score > event['sport_event_status']['home_score']:
+                                self.side_score = event['sport_event_status']['home_score']
+                                print("Team goal canceled...")
                         else:
                             if self.side_score < event['sport_event_status']['away_score']:
                                 self.side_score = event['sport_event_status']['away_score']
@@ -87,6 +96,12 @@ class SportResultNotifier:
                                 self.opponent_score = event['sport_event_status']['home_score']
                                 print("Opponent scored!")
                                 return Result.OPPONENT_GOAL
+                            elif self.opponent_score > event['sport_event_status']['home_score']:
+                                self.opponent_score = event['sport_event_status']['home_score']
+                                print("Opponent goal canceled!")
+                            elif self.side_score > event['sport_event_status']['away_score']:
+                                self.side_score = event['sport_event_status']['away_score']
+                                print("Team goal canceled...")
                         return Result.IN_PROGRESS
         # Team not found
         return None
