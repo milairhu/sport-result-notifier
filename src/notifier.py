@@ -153,11 +153,9 @@ class SportResultNotifier:
             elif result == Result.TEAM_GOAL:
                 winsound.PlaySound('sound/goal_team.wav', winsound.SND_FILENAME)
                 self.log_result(Result.TEAM_GOAL)
-                break
             elif result == Result.OPPONENT_GOAL:
                 winsound.PlaySound('sound/goal_opponent.wav', winsound.SND_FILENAME)
                 self.log_result(Result.OPPONENT_GOAL)
-                break
             elif result == Result.HALF_TIME:
                 # Halftime: Wait 5 minutes before checking the result again
                 self.log_result(Result.HALF_TIME)
