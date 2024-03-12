@@ -75,33 +75,29 @@ class SportResultNotifier:
                         if self.side_is_home:
                             if self.side_score < event['sport_event_status']['home_score']:
                                 self.side_score = event['sport_event_status']['home_score']
-                                print("Team scored!")
                                 return Result.TEAM_GOAL
                             elif self.opponent_score < event['sport_event_status']['away_score']:
                                 self.opponent_score = event['sport_event_status']['away_score']
-                                print("Opponent scored!")
                                 return Result.OPPONENT_GOAL
                             elif self.opponent_score > event['sport_event_status']['away_score']:
                                 self.opponent_score = event['sport_event_status']['away_score']
-                                print("Opponent goal canceled!")
+                                return Result.OPPONENT_GOAL_CANCELED
                             elif self.side_score > event['sport_event_status']['home_score']:
                                 self.side_score = event['sport_event_status']['home_score']
-                                print("Team goal canceled...")
+                                return Result.TEAM_GOAL_CANCELED
                         else:
                             if self.side_score < event['sport_event_status']['away_score']:
                                 self.side_score = event['sport_event_status']['away_score']
-                                print("Team scored!")
                                 return Result.TEAM_GOAL
                             elif self.opponent_score < event['sport_event_status']['home_score']:
                                 self.opponent_score = event['sport_event_status']['home_score']
-                                print("Opponent scored!")
                                 return Result.OPPONENT_GOAL
                             elif self.opponent_score > event['sport_event_status']['home_score']:
                                 self.opponent_score = event['sport_event_status']['home_score']
-                                print("Opponent goal canceled!")
+                                return Result.OPPONENT_GOAL_CANCELED
                             elif self.side_score > event['sport_event_status']['away_score']:
                                 self.side_score = event['sport_event_status']['away_score']
-                                print("Team goal canceled...")
+                                return Result.TEAM_GOAL_CANCELED
                         return Result.IN_PROGRESS
         # Team not found
         return None
