@@ -113,14 +113,17 @@ class SportResultNotifier:
     def play_win_sound(self) -> None:
         # Launch win music
         winsound.PlaySound(self.win_sound, winsound.SND_FILENAME)
+        winsound.PlaySound('sound/win_voice.wav', winsound.SND_FILENAME)
 
     def play_loss_sound(self) -> None:
         # Launch loss music
         winsound.PlaySound(self.loss_sound, winsound.SND_FILENAME)
+        winsound.PlaySound('sound/loss_voice.wav', winsound.SND_FILENAME)
 
     def play_draw_sound(self) -> None:
         # Launch draw music
         winsound.PlaySound(self.draw_sound, winsound.SND_FILENAME)
+        winsound.PlaySound('sound/draw_voice.wav', winsound.SND_FILENAME)
 
     def monitor_event(self) -> None:
         while True:
@@ -134,19 +137,17 @@ class SportResultNotifier:
                 return
             if result ==  Result.WIN:
                 self.play_win_sound()
-                winsound.PlaySound('sound/win_voice.wav', winsound.SND_FILENAME)
+                
                 self.log_result(Result.WIN)
                 print("Team won! Exiting...")
                 return
             elif result == Result.LOSS:
                 self.play_loss_sound()
-                winsound.PlaySound('sound/loss_voice.wav', winsound.SND_FILENAME)
                 self.log_result(Result.LOSS)
                 print("Team lost. Exiting...")
                 return
             elif result == Result.DRAW:
                 self.play_draw_sound()
-                winsound.PlaySound('sound/draw_voice.wav', winsound.SND_FILENAME)
                 self.log_result(Result.DRAW)
                 print("Game is a draw. Exiting...")
                 return
@@ -156,6 +157,12 @@ class SportResultNotifier:
             elif result == Result.OPPONENT_GOAL:
                 winsound.PlaySound('sound/goal_opponent.wav', winsound.SND_FILENAME)
                 self.log_result(Result.OPPONENT_GOAL)
+            elif result == Result.OPPONENT_GOAL_CANCELED:
+                winsound.PlaySound('sound/opponent_canceled_voice.wav', winsound.SND_FILENAME)
+                self.log_result(Result.OPPONENT_GOAL_CANCELED)
+            elif result == Result.TEAM_GOAL_CANCELED:
+                winsound.PlaySound('sound/team_canceled_voice.wav', winsound.SND_FILENAME)
+                self.log_result(Result.TEAM_GOAL_CANCELED)
             elif result == Result.HALF_TIME:
                 # Halftime: Wait 5 minutes before checking the result again
                 self.log_result(Result.HALF_TIME)
