@@ -5,6 +5,8 @@ from datetime import datetime
 import time
 import winsound
 
+from src.utils import speak_text
+
 class SportResultNotifier:
 
     def __init__(self, sport: Sport, side: str) -> None:
@@ -109,17 +111,21 @@ class SportResultNotifier:
     def play_win_sound(self) -> None:
         # Launch win music
         winsound.PlaySound(self.win_sound, winsound.SND_FILENAME)
-        winsound.PlaySound('sound/win_voice.wav', winsound.SND_FILENAME)
+        speak_text(f"Game is over. Congratulations! {self.side} won the game!")
 
     def play_loss_sound(self) -> None:
         # Launch loss music
         winsound.PlaySound(self.loss_sound, winsound.SND_FILENAME)
-        winsound.PlaySound('sound/loss_voice.wav', winsound.SND_FILENAME)
+        speak_text(f"Game is over. Too bad... {self.side} lost the game...")
 
     def play_draw_sound(self) -> None:
         # Launch draw music
         winsound.PlaySound(self.draw_sound, winsound.SND_FILENAME)
-        winsound.PlaySound('sound/draw_voice.wav', winsound.SND_FILENAME)
+        speak_text("Game is over. The game is a draw...")
+
+    def play_half_time_sound(self) -> None:
+        # Launch half time music
+        speak_text("Game is at half time. See you in a few minutes!")
 
     def monitor_event(self) -> None:
         while True:
@@ -162,6 +168,7 @@ class SportResultNotifier:
             elif result == Result.HALF_TIME:
                 # Halftime: Wait 5 minutes before checking the result again
                 self.log_result(Result.HALF_TIME)
+                self.play_half_time_sound()
                 time.sleep(60*5)
             elif result == Result.IN_PROGRESS:
                 # Wait 1 minute before checking the result again
