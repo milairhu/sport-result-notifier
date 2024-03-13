@@ -139,7 +139,6 @@ class SportResultNotifier:
                 return
             if result ==  Result.WIN:
                 self.play_win_sound()
-                
                 self.log_result(Result.WIN)
                 print("Team won! Exiting...")
                 return
@@ -154,16 +153,16 @@ class SportResultNotifier:
                 print("Game is a draw. Exiting...")
                 return
             elif result == Result.TEAM_GOAL:
-                winsound.PlaySound('sound/goal_team.wav', winsound.SND_FILENAME)
+                speak_text(f"Goal for {self.side}!")
                 self.log_result(Result.TEAM_GOAL)
             elif result == Result.OPPONENT_GOAL:
-                winsound.PlaySound('sound/goal_opponent.wav', winsound.SND_FILENAME)
+                speak_text(f"Goal for opponent...")
                 self.log_result(Result.OPPONENT_GOAL)
             elif result == Result.OPPONENT_GOAL_CANCELED:
-                winsound.PlaySound('sound/opponent_canceled_voice.wav', winsound.SND_FILENAME)
+                speak_text(f"Goal for opponent canceled!")
                 self.log_result(Result.OPPONENT_GOAL_CANCELED)
             elif result == Result.TEAM_GOAL_CANCELED:
-                winsound.PlaySound('sound/team_canceled_voice.wav', winsound.SND_FILENAME)
+                speak_text(f"Goal for {self.side} canceled...")
                 self.log_result(Result.TEAM_GOAL_CANCELED)
             elif result == Result.HALF_TIME:
                 # Halftime: Wait 5 minutes before checking the result again
