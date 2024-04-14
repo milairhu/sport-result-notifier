@@ -72,7 +72,7 @@ class SportResultNotifier:
                     else:
                         # Game is still in progress
                         print("Game is still in progress")
-                        print(f"Team: {self.side} plays home : {self.side_is_home}. Score: Self {self.side_score} - Opponent:  {self.opponent_score}")
+                        print(f"Score: Self {self.side_score} - Opponent:  {self.opponent_score}")
                         # Look for score changes
                         if self.side_is_home:
                             if self.side_score < event['sport_event_status']['home_score']:
