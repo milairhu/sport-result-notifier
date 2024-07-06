@@ -1,6 +1,6 @@
 # Sport Results and Events Notifier
 
-A Python script that triggers audio notifications for sport results and events. It uses the [api.sportradar.us](https://developer.sportradar.com) API to get live sport summaries.
+A Python script that triggers audio notifications for sport results and events. It uses the [api.sportradar.us](https://developer.sportradar.com) API to get live sport events summaries.
 
 ## Description
 
