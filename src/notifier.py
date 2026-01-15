@@ -165,10 +165,10 @@ class SportResultNotifier:
                 speak_text(f"Goal for {self.side} canceled...")
                 self.log_result(Result.TEAM_GOAL_CANCELED)
             elif result == Result.HALF_TIME:
-                # Halftime: Wait 5 minutes before checking the result again
+                # Halftime: Wait 10 minutes before checking the result again
                 self.log_result(Result.HALF_TIME)
                 self.play_half_time_sound()
-                time.sleep(60*5)
+                time.sleep(60*10)
             elif result == Result.IN_PROGRESS:
                 # Wait 1 minute before checking the result again
                 time.sleep(60)
